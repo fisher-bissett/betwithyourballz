@@ -42,7 +42,7 @@ export const TeamCard = ({competitors, date}) => {
           {idx === 0 ? (
             <>
               <div style={logoStyle}>
-                <img src={getTeamLogo(competitor.displayName)} alt={competitor.displayName} height="60px" />
+                <img className="h-14 w-fit" src={getTeamLogo(competitor.displayName)} alt={competitor.displayName} />
               </div>
               <div style={{display: 'flex', flexDirection: 'column', margin: '0 16px'}}>
                 <div>{competitor.displayName}</div>
@@ -56,17 +56,17 @@ export const TeamCard = ({competitors, date}) => {
                 <div style={{fontSize: '12px', color: 'gray'}}>{`${capitalizeFirstLetter(competitor.homeAway)} (${competitor.record}) `}</div>
               </div>
               <div style={logoStyle}>
-                <img src={getTeamLogo(competitor.displayName)} alt={competitor.displayName} height="60px" />
+                <img className="h-14 w-fit" src={getTeamLogo(competitor.displayName)} alt={competitor.displayName} />
               </div>
             </>
           )}
         </div>
-        {idx === 0 && (
+        {/* {idx === 0 && (
           <>
           <div>{date}</div>
           <div>at</div>
           </>
-        )}
+        )} */}
         </React.Fragment>
         )
     })}
