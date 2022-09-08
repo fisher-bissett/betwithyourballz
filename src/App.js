@@ -7,7 +7,8 @@ import { auth } from './firebase';
 
 const App = () => {
   const [user, loading, error] = useAuthState(auth);
-
+  console.log(user);
+  console.log(error);
   return (
     <>
       {user ? <Home /> : <Login />}

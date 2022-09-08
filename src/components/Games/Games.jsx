@@ -16,7 +16,7 @@ export const Games = () => {
        setData(res.data.sports[0])
     })
    }, [url])
-
+   console.log(data.leagues[0])
   return (
       <>
       {data ? (
@@ -28,7 +28,7 @@ export const Games = () => {
             {data.leagues[0].events.map((event, idx) => <Matchup key={idx} event={event} />)}
           </Grid>
         </>
-      ) : <>loading...</>}
+      ) : <div className="text-center">loading...</div>}
       </>
   );
 }
