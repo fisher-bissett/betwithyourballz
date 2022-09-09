@@ -1,10 +1,13 @@
-import { useState } from 'react'
-import { RadioGroup } from '@headlessui/react'
+import React, { useState } from "react";
+import { RadioGroup } from "@headlessui/react";
 
-export const Select = ({options}) =>  {
-  const [selected, setSelected] = useState(options[0])
+interface Props {
+  options: any[];
+}
 
-  console.log(selected)
+export const Select: React.FC<Props> = ({ options }) => {
+  const [selected, setSelected] = useState(options[0]);
+
   return (
     <div className="w-full px-4 py-12">
       <div className="mx-auto w-full max-w-md">
@@ -16,9 +19,7 @@ export const Select = ({options}) =>  {
                 key={option.name}
                 value={option}
                 className={({ active, checked }) =>
-                  `${
-                    checked ? 'bg-sky-900 bg-opacity-75 text-white' : 'bg-white'
-                  }
+                  `${checked ? "bg-sky-900 bg-opacity-75 text-white" : "bg-white"}
                     relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md`
                 }
               >
@@ -29,21 +30,15 @@ export const Select = ({options}) =>  {
                         <div className="text-sm">
                           <RadioGroup.Label
                             as="p"
-                            className={`font-medium  ${
-                              checked ? 'text-white' : 'text-gray-900'
-                            }`}
+                            className={`font-medium  ${checked ? "text-white" : "text-gray-900"}`}
                           >
                             {option.name}
                           </RadioGroup.Label>
                           <RadioGroup.Description
                             as="span"
-                            className={`inline ${
-                              checked ? 'text-sky-100' : 'text-gray-500'
-                            }`}
+                            className={`inline ${checked ? "text-sky-100" : "text-gray-500"}`}
                           >
-                            <span>
-                              {option.stat}
-                            </span>
+                            <span>{option.stat}</span>
                           </RadioGroup.Description>
                         </div>
                       </div>
@@ -61,10 +56,10 @@ export const Select = ({options}) =>  {
         </RadioGroup>
       </div>
     </div>
-  )
-}
+  );
+};
 
-const CheckIcon = (props) => {
+const CheckIcon = (props: any) => {
   return (
     <svg viewBox="0 0 24 24" fill="none" {...props}>
       <circle cx={12} cy={12} r={12} fill="#fff" opacity="0.2" />
@@ -76,5 +71,5 @@ const CheckIcon = (props) => {
         strokeLinejoin="round"
       />
     </svg>
-  )
-}
+  );
+};
