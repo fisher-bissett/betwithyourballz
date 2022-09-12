@@ -1,24 +1,28 @@
-import React, { Dispatch, Fragment, SetStateAction } from "react";
+import React, { Dispatch, Fragment, SetStateAction, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Grid } from "@mui/material";
 import format from "date-fns/format";
 
-// import EspnLogo from "../../assets/espn-logo.png";
+import EspnLogo from "../../assets/espn-logo.png";
 import { TeamInfo } from "./TeamInfo";
 import { Select } from "./Select";
 import { MatchupInfo } from "./MatchupInfo";
 import { Event, Odds } from "../../types/types";
+import { Bet, SelectOption } from "../../types/bets";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 interface Props {
   event: Event;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  userId: String;
+  weekNumber: number;
 }
 
-export const MatchupModal: React.FC<Props> = ({ event, isOpen, setIsOpen }) => {
-  const closeModal = () => {
-    setIsOpen(false);
-  };
+export const MatchupModal: React.FC<Props> = ({ event, isOpen, setIsOpen, userId, weekNumber }) => {
+  const [selected, setSelected] = useState<SelectOption | undefined>();
+  const [bet, setBet] = useState<Bet>();
 
   const getSpread = (odds: Odds) => {
     if (odds.awayTeamOdds.underdog) {
@@ -28,24 +32,65 @@ export const MatchupModal: React.FC<Props> = ({ event, isOpen, setIsOpen }) => {
     } else return "";
   };
 
-  const options = [
+  const formatBet = () => {
+    const currentBet: Bet = {
+      favorite: selected?.name === "favorite" ? selected.stat : undefined,
+      underdog: selected?.name === "underdog" ? selected.stat : undefined,
+      over: selected?.name === "over" ? selected.stat : undefined,
+      under: selected?.name === "under" ? selected.stat : undefined,
+      userId,
+      weekNumber
+    };
+    setBet(currentBet);
+  };
+
+  useEffect(() => {
+    formatBet();
+  }, [selected]);
+
+  console.log("bet...: ", bet);
+  const options: SelectOption[] = [
     {
-      name: "Favorite",
+      label: "Favorite",
+      name: "favorite",
       stat: event.odds.details
     },
     {
-      name: "Underdog",
+      label: "Underdog",
+      name: "underdog",
       stat: getSpread(event.odds)
     },
     {
-      name: "Over",
+      label: "Over",
+      name: "over",
       stat: `${event.odds.overUnder} ↑`
     },
     {
-      name: "Under",
+      label: "Under",
+      name: "under",
       stat: `${event.odds.overUnder} ↓`
     }
   ];
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const placeBet = async () => {
+    try {
+      await updateDoc(doc(db, "bets"), {
+        favorite: bet?.favorite ?? null,
+        underdog: bet?.underdog ?? null,
+        over: bet?.over ?? null,
+        under: bet?.under ?? null,
+        userId: userId,
+        weekNumber: weekNumber
+      });
+      setIsOpen(false);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <>
@@ -107,14 +152,14 @@ export const MatchupModal: React.FC<Props> = ({ event, isOpen, setIsOpen }) => {
                       >
                         <span className="italic">View on</span>
                         <span>
-                          <img src={"#"} className="h-3" />
+                          <img src={EspnLogo} className="h-3" />
                         </span>
                       </button>
                     </a>
                   </div>
 
                   <div className="flex">
-                    <Select options={options} />
+                    <Select options={options} selected={selected} setSelected={setSelected} />
                   </div>
 
                   <div className="mt-2 flex justify-around"></div>
@@ -132,7 +177,7 @@ export const MatchupModal: React.FC<Props> = ({ event, isOpen, setIsOpen }) => {
                       <button
                         type="button"
                         className="inline-flex justify-center rounded-md border border-transparent bg-green-200 px-4 py-2 text-sm font-medium hover:bg-green-400 focus:outline-none"
-                        onClick={closeModal}
+                        onClick={placeBet}
                       >
                         Place Bet
                       </button>

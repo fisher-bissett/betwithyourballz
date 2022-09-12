@@ -13,7 +13,7 @@ interface Props {
 
 export const TeamCard: React.FC<Props> = ({ competitors, date, overUnder, spread }) => {
   return (
-    <Grid container fontSize="18px" alignItems="center" className="my-1">
+    <Grid container fontSize="18px" alignItems="center" className="my-1 flex-nowrap">
       <Grid item container xs={4}>
         <TeamSection competitor={competitors[1]} />
       </Grid>

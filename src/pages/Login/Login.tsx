@@ -3,7 +3,7 @@ import { googleProvider, auth, db } from "../../firebase";
 import { signInWithPopup } from "firebase/auth";
 import { query, collection, where, getDocs, addDoc } from "firebase/firestore";
 
-// import GoogleIcon from "../../assets/google-logo.svg";
+import GoogleIcon from "../../assets/google-logo.svg";
 
 export const Login = () => {
   const signInWithGoogle = async () => {
@@ -35,11 +35,11 @@ export const Login = () => {
           className="inline-flex items-center gap-3 border-2 border-black rounded-full px-10 py-2 hover:bg-gray-100 mt-3"
           onClick={signInWithGoogle}
         >
-          <img src={"#"} className="h-6" />
+          <img src={GoogleIcon} className="h-6" />
           <span>Continue with Google</span>
         </button>
       </div>
-      <div className="bg-gray-300 rounded-3xl h-screen p-3 border-8 border-white"></div>
+      <div className="bg-gray-300 rounded-3xl h-screen p-3 border-8 border-white text-center items-center" />
     </div>
   );
 };

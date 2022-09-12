@@ -22,9 +22,10 @@ const StyledMatchupCard = styled.div`
 
 interface Props {
   event: Event;
+  userId: String;
 }
 
-export const Matchup: React.FC<Props> = ({ event }) => {
+export const Matchup: React.FC<Props> = ({ event, userId }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -38,7 +39,13 @@ export const Matchup: React.FC<Props> = ({ event }) => {
           spread={event.odds.details}
         />
       </StyledMatchupCard>
-      <MatchupModal event={event} isOpen={isOpen} setIsOpen={setIsOpen} />
+      <MatchupModal
+        event={event}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        userId={userId}
+        weekNumber={event.week}
+      />
     </>
   );
 };
