@@ -5,7 +5,7 @@ import format from "date-fns/format";
 
 import EspnLogo from "../../assets/espn-logo.png";
 import { TeamInfo } from "./TeamInfo";
-import { Select } from "./Select";
+import { MultipleChoice } from "./Select";
 import { MatchupInfo } from "./MatchupInfo";
 import { Event, Odds } from "../../types/types";
 import { Bet, SelectOption } from "../../types/bets";
@@ -21,7 +21,6 @@ interface Props {
 }
 
 export const MatchupModal: React.FC<Props> = ({ event, isOpen, setIsOpen, userId, weekNumber }) => {
-  const [selected, setSelected] = useState<SelectOption | undefined>();
   const [bet, setBet] = useState<Bet>();
 
   const getSpread = (odds: Odds) => {
@@ -43,10 +42,6 @@ export const MatchupModal: React.FC<Props> = ({ event, isOpen, setIsOpen, userId
     };
     setBet(currentBet);
   };
-
-  useEffect(() => {
-    formatBet();
-  }, [selected]);
 
   console.log("bet...: ", bet);
   const options: SelectOption[] = [
@@ -71,6 +66,11 @@ export const MatchupModal: React.FC<Props> = ({ event, isOpen, setIsOpen, userId
       stat: `${event.odds.overUnder} ↓`
     }
   ];
+
+  const [selected, setSelected] = useState<SelectOption>(options[0]);
+  useEffect(() => {
+    formatBet();
+  }, [selected]);
 
   const closeModal = () => {
     setIsOpen(false);
@@ -159,7 +159,11 @@ export const MatchupModal: React.FC<Props> = ({ event, isOpen, setIsOpen, userId
                   </div>
 
                   <div className="flex">
-                    <Select options={options} selected={selected} setSelected={setSelected} />
+                    <MultipleChoice
+                      options={options}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
                   </div>
 
                   <div className="mt-2 flex justify-around"></div>

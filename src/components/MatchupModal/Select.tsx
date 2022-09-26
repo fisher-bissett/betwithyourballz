@@ -1,27 +1,31 @@
-import React, { Dispatch, Key, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { RadioGroup } from "@headlessui/react";
 import { SelectOption } from "../../types/bets";
 
 interface Props {
   options: SelectOption[];
-  selected?: SelectOption;
-  setSelected?: Dispatch<SetStateAction<SelectOption | undefined>>;
+  selected: SelectOption;
+  setSelected: Dispatch<SetStateAction<SelectOption>>;
 }
 
-export const Select: React.FC<Props> = ({ options, selected, setSelected }) => {
-  console.log("selected: ", selected);
+export const MultipleChoice: React.FC<Props> = ({ options, selected, setSelected }) => {
+  // const [selected, setSelected] = useState(plans[0]);
+  console.log(options);
   return (
-    <div className="w-full px-4 py-12">
+    <div className="w-full px-4 py-16">
       <div className="mx-auto w-full max-w-md">
         <RadioGroup value={selected} onChange={setSelected}>
+          <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
           <div className="space-y-2">
-            {options.map((option, idx) => (
+            {options.map((item, idx) => (
               <RadioGroup.Option
                 key={idx}
-                value={option}
+                value={item}
                 className={({ active, checked }) => {
-                  return `${active ? "bg-sky-900 bg-opacity-75 text-white" : "bg-white"}
-                    relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md`;
+                  console.log(checked);
+                  return `
+                  ${checked ? "bg-sky-900 bg-opacity-75 text-white" : "bg-white"}
+                    relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none`;
                 }}
               >
                 {({ active, checked }) => (
@@ -31,19 +35,19 @@ export const Select: React.FC<Props> = ({ options, selected, setSelected }) => {
                         <div className="text-sm">
                           <RadioGroup.Label
                             as="p"
-                            className={`font-medium  ${active ? "text-white" : "text-gray-900"}`}
+                            className={`font-medium  ${checked ? "text-white" : "text-gray-900"}`}
                           >
-                            {option.label}
+                            {item.name}
                           </RadioGroup.Label>
                           <RadioGroup.Description
                             as="span"
-                            className={`inline ${active ? "text-sky-100" : "text-gray-500"}`}
+                            className={`inline ${checked ? "text-sky-100" : "text-gray-500"}`}
                           >
-                            <span>{option.stat}</span>
+                            <span>{item.stat}</span>
                           </RadioGroup.Description>
                         </div>
                       </div>
-                      {active && (
+                      {checked && (
                         <div className="shrink-0 text-white">
                           <CheckIcon className="h-6 w-6" />
                         </div>

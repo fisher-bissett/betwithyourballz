@@ -13,6 +13,10 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../firebase";
 import { Bet } from "../../types/bets";
+import { BetItem } from "./BetItem";
+import axios from "axios";
+import { Sport } from "../../types/types";
+import { CircularProgress } from "@mui/material";
 
 interface Props {}
 
@@ -63,15 +67,91 @@ export const Selections: React.FC<Props> = () => {
     });
   };
 
+  const url = "https://site.web.api.espn.com/apis/v2/scoreboard/header?sport=football&league=nfl";
+  const [data, setData] = useState<Sport>();
+
+  useEffect(() => {
+    axios.get(url).then((res) => {
+      setData(res.data.sports[0]);
+    });
+  }, []);
+
+  const getMatchup = (bet: String) => {
+    const teamAbbr = bet.split(" ")[0];
+
+    if (data) {
+      const matchup = data.leagues[0].events.find((item, idx) => {
+        return item.shortName.includes(teamAbbr);
+      });
+      return matchup;
+    }
+  };
+
   return (
     <>
-      {user && (
+      {/* {user && (
         <div className="flex flex-col">
           <div>{user?.displayName}'s bets</div>
           <span>favorite {userBets?.favorite}</span>
           <span>underdog {userBets?.underdog}</span>
           <span>over {userBets?.over}</span>
           <span>under {userBets?.under}</span>
+        </div>
+      )} */}
+
+      {data && (
+        <div className="p-8 flex flex-wrap gap-10">
+          {userBets?.favorite ? (
+            <BetItem
+              bet={userBets.favorite}
+              matchup={getMatchup(userBets.favorite)}
+              category="Favorite"
+            />
+          ) : (
+            <div className="flex flex-col text-center w-[300px]">
+              <div className="text-3xl">Favorite</div>
+              <div className="rounded-3xl bg-gray-200 w-[300px] h-[230px]" />
+            </div>
+          )}
+          {userBets?.underdog ? (
+            <BetItem
+              bet={userBets.underdog}
+              matchup={getMatchup(userBets.underdog)}
+              category="Underdog"
+            />
+          ) : (
+            <div className="flex flex-col text-center w-[300px]">
+              <div className="text-3xl">Underdog</div>
+              <div className="rounded-3xl bg-gray-200 w-[300px] h-[230px]" />
+            </div>
+          )}
+          {userBets?.over ? (
+            <BetItem
+              bet={userBets.over}
+              // matchup={getMatchup(userBets.underdog)}
+              category="Over"
+            />
+          ) : (
+            <div className="flex flex-col text-center w-[300px]">
+              <div className="text-3xl">Over</div>
+              <div className="rounded-3xl bg-gray-200 w-[300px] h-[230px]" />
+            </div>
+          )}
+          {userBets?.under ? (
+            <BetItem
+              bet={userBets.under}
+              // matchup={getMatchup(userBets.underdog)}
+              category="Under"
+            />
+          ) : (
+            <div className="flex flex-col text-center w-[300px]">
+              <div className="text-3xl">Under</div>
+              <div className="rounded-3xl bg-gray-200 w-[300px] h-[230px]" />
+            </div>
+          )}
+          {/* <BetItem bet={userBets?.underdog ?? ""} matchup={""} category="Underdog" />
+        <BetItem bet={userBets?.over ?? ""} matchup={""} category="Over" />
+      <BetItem bet={userBets?.under ?? ""} matchup={""} category="Under" /> */}
         </div>
       )}
     </>
