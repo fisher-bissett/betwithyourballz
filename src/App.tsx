@@ -7,7 +7,6 @@ import { Login } from "./pages/Login/Login";
 
 const App: React.FC = () => {
   const [user, loading, error] = useAuthState(auth);
-  // console.log("user: ", user);
   return (
     <>
       {user ? (

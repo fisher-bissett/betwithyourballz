@@ -43,7 +43,6 @@ export const MatchupModal: React.FC<Props> = ({ event, isOpen, setIsOpen, userId
     setBet(currentBet);
   };
 
-  console.log("bet...: ", bet);
   const options: SelectOption[] = [
     {
       label: "Favorite",

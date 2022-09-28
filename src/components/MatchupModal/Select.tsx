@@ -10,7 +10,6 @@ interface Props {
 
 export const MultipleChoice: React.FC<Props> = ({ options, selected, setSelected }) => {
   // const [selected, setSelected] = useState(plans[0]);
-  console.log(options);
   return (
     <div className="w-full px-4 py-16">
       <div className="mx-auto w-full max-w-md">
@@ -22,7 +21,6 @@ export const MultipleChoice: React.FC<Props> = ({ options, selected, setSelected
                 key={idx}
                 value={item}
                 className={({ active, checked }) => {
-                  console.log(checked);
                   return `
                   ${checked ? "bg-sky-900 bg-opacity-75 text-white" : "bg-white"}
                     relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none`;
