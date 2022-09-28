@@ -178,9 +178,10 @@ export const MatchupModal: React.FC<Props> = ({ event, isOpen, setIsOpen, userId
                     </div>
                     <div className="mt-4">
                       <button
+                        disabled
                         type="button"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-green-200 px-4 py-2 text-sm font-medium hover:bg-green-400 focus:outline-none"
-                        onClick={placeBet}
+                        className="disabled:bg-gray-500 inline-flex justify-center rounded-md border border-transparent bg-green-200 px-4 py-2 text-sm font-medium hover:bg-green-400 focus:outline-none"
+                        onClick={() => {}}
                       >
                         Place Bet
                       </button>
