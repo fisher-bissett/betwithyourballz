@@ -4,9 +4,11 @@ import { Grid, useMediaQuery } from "@mui/material";
 
 import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 export const NavBar = () => {
   const mobile = useMediaQuery("(max-width:750px)");
+  const navigate = useNavigate();
   const [user, loading, error] = useAuthState(auth);
 
   const headerStyle = {
@@ -34,7 +36,14 @@ export const NavBar = () => {
         BwyB
       </Grid>
       <Grid item xs={4} className="text-end">
-        <button onClick={() => signOut(auth)}>Sign out</button>
+        <button
+          onClick={() => {
+            signOut(auth);
+            navigate("/login");
+          }}
+        >
+          Sign out
+        </button>
       </Grid>
     </Grid>
   );
