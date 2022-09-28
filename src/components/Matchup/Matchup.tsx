@@ -4,6 +4,8 @@ import { Event } from "../../types/types";
 
 import { TeamCard } from "./TeamCard";
 import { MatchupModal } from "../MatchupModal/MatchupModal";
+import { useMediaQuery } from "@mui/material";
+import { MobileMatchupModal } from "../MatchupModal/MobileMatchupModal";
 
 const StyledMatchupCard = styled.div`
   display: flex;
@@ -27,6 +29,7 @@ interface Props {
 }
 
 export const Matchup: React.FC<Props> = ({ event, userId }) => {
+  const mobile = useMediaQuery("(max-width:750px)");
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -40,13 +43,23 @@ export const Matchup: React.FC<Props> = ({ event, userId }) => {
           spread={event.odds.details}
         />
       </StyledMatchupCard>
-      <MatchupModal
-        event={event}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        userId={userId}
-        weekNumber={event.week}
-      />
+      {mobile ? (
+        <MobileMatchupModal
+          event={event}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          userId={userId}
+          weekNumber={event.week}
+        />
+      ) : (
+        <MatchupModal
+          event={event}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          userId={userId}
+          weekNumber={event.week}
+        />
+      )}
     </>
   );
 };
