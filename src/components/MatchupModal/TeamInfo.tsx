@@ -11,7 +11,7 @@ export const TeamInfo: React.FC<Props> = ({ team }) => {
   const mobile = useMediaQuery("(max-width:750px)");
   return (
     <div className="flex flex-col	rounded-2xl justify-center text-white font-semibold text-center items-center">
-      <img className={`${mobile ? "h-20" : "h-40"} w-fit`} src={team.logo} />
+      <img className={`${mobile ? "h-20" : "h-40"} ${mobile ? "w-20" : "w-fit"}`} src={team.logo} />
       <span className={`${mobile ? "text-xs" : ""}`}>
         {mobile
           ? team.displayName.split(" ")[team.displayName.split(" ").length - 1]
