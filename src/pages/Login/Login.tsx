@@ -37,7 +37,7 @@ export const Login = () => {
       {mobile ? (
         <div className="relative h-screen">
           <div className="absolute w-screen h-screen overflow-hidden">
-            <video src={bgVideo} autoPlay loop muted width="100%" />
+            <video src={bgVideo} playsInline autoPlay loop muted width="100%" />
           </div>
           <div className="relative text-center z-10 top-1/3 bg-gray-100 bg-opacity-10 rounded-2xl mx-4 p-4">
             <div className="text-3xl font-bold italic">BwyB</div>
@@ -65,7 +65,7 @@ export const Login = () => {
             </button>
           </div>
           <div className="bg-gray-300 w-full rounded-3xl h-screen border-8 border-white text-center items-center overflow-hidden">
-            <video src={bgVideo} autoPlay loop muted width="100%" />
+            <video src={bgVideo} playsInline autoPlay loop muted width="100%" />
           </div>
         </div>
       )}
