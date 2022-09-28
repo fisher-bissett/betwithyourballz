@@ -18,7 +18,7 @@ export const TabView = () => {
   });
 
   return (
-    <div className="w-full px-2 py-16 sm:px-0">
+    <div className="w-full px-4 py-16 sm:px-0">
       <Tab.Group>
         <Tab.List
           className={`flex space-x-1 rounded-xl bg-gray-900/20 p-1 ${
@@ -47,7 +47,7 @@ export const TabView = () => {
             <Tab.Panel
               key={idx}
               className={classNames(
-                "rounded-xl bg-white p-3",
+                `rounded-xl bg-white ${mobile ? "p-0" : "p-3"}`,
                 "ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none"
               )}
             >

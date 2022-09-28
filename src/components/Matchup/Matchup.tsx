@@ -12,7 +12,8 @@ const StyledMatchupCard = styled.div`
   align-items: center;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
-  margin: 16px;
+  margin: 16px 0;
+  padding: 0.5rem;
   font-size: 18px;
   cursor: pointer;
   &:hover {
