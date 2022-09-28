@@ -37,7 +37,15 @@ export const Login = () => {
       {mobile ? (
         <div className="relative h-screen">
           <div className="absolute w-screen h-screen overflow-hidden">
-            <video src={bgVideo} playsInline autoPlay loop muted width="100%" />
+            <video
+              autoPlay
+              className="object-cover h-full"
+              loop
+              muted
+              playsInline
+              src={bgVideo}
+              width="100%"
+            />
           </div>
           <div className="relative text-center z-10 top-1/3 bg-gray-100 bg-opacity-10 rounded-2xl mx-4 p-4">
             <div className="text-3xl font-bold italic">BwyB</div>
