@@ -27,7 +27,7 @@ export const NavBar = () => {
           <img
             src={user?.photoURL ?? ""}
             referrerPolicy="no-referrer"
-            className="h-10 w-fit rounded-full"
+            className="h-10 w-10 rounded-full"
           />
           {!mobile && <div className="mx-4">{user?.displayName}</div>}
         </Grid>
