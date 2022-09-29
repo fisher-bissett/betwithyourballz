@@ -73,7 +73,15 @@ export const Login = () => {
             </button>
           </div>
           <div className="bg-gray-300 w-full rounded-3xl h-screen border-8 border-white text-center items-center overflow-hidden">
-            <video src={bgVideo} playsInline autoPlay loop muted width="100%" />
+            <video
+              src={bgVideo}
+              playsInline
+              autoPlay
+              loop
+              muted
+              width="100%"
+              className="h-full object-cover"
+            />
           </div>
         </div>
       )}
